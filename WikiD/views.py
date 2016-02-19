@@ -1,8 +1,13 @@
 from .models import Post, get_todays_recent_posts, get_post
 from flask import Flask, request, session, redirect, url_for, render_template, flash
 from .user import User
+from .db_connection import graph
 
 app = Flask(__name__)
+
+@app.before_request
+def before_request():
+    print(graph)
 
 
 @app.route('/index')
@@ -93,19 +98,6 @@ def add_post():
         User(session['username']).add_post(title)
 
     return redirect(url_for('index'))
-
-# @app.route('/like_post/<post_id>')
-# def like_post(post_id):
-#    username = session.get('username')
-#
-#    if not username:
-#        flash('You must be logged in to like a post.')
-#        return redirect(url_for('login'))
-#
-#    User(username).like_post(post_id)
-#
-#    flash('Liked post.')
-#    return redirect(request.referrer)
 
 
 @app.route('/agree_with_post/<post_id>')

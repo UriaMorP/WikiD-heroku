@@ -3,7 +3,7 @@ from passlib.hash import bcrypt
 from datetime import datetime
 import os
 import uuid
-
+from .db_connection import graph
 
 class Post:
 

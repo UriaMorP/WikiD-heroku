@@ -1,10 +1,12 @@
-from py2neo import Graph, Node, Relationship, authenticate
-
+from py2neo import Node, Relationship
+from .db_connection import graph
+from passlib.hash import bcrypt
 
 class User:
 
     def __init__(self, username):
         self.username = username
+        print(graph)
 
     def find(self):
         user = graph.find_one("User", "username", self.username)
@@ -12,8 +14,7 @@ class User:
 
     def register(self, password):
         if not self.find():
-            user = Node("User", username=self.username,
-                        password=bcrypt.encrypt(password))
+            user = Node("User", username=self.username, password=bcrypt.encrypt(password))
             graph.create(user)
             return True
         else:

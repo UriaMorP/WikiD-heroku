@@ -6,3 +6,5 @@ _site/
 .*.swp
 .*.swo
 venv
+*.lyx
+*.pdf
